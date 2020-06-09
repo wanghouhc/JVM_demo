@@ -1,0 +1,79 @@
+java 参数 代码
+Java -Xms64m TestJVM
+
+一. 标准参数
+1.  -version
+2.  -help
+3. -server 64位只能是这个模式
+4. -client  64位和32位 可选
+5. -Dstr=hello
+
+二.  -X  非标准化
+1. -Xint
+   编译快，运行慢（会编译全部代码成为class文件，然后运行）
+2. -Xcomp
+   编译慢，运行快（会将所有的代码编译为本地代码，然后运行），会占用JIT的性能
+3. -Xmind
+混合模式，默认
+
+三.  -XX参数 使用率较高 多用于jvm调优
+
+可以用System.  来获取关于系统的方法
+
+非boolean类型
+   -XX:newSize  新生代和老年代的比值
+
+boolean类型
+  -XX:+UserSerialGC (+ 代表添加此类功能，- 代表减去此类功能）
+  -XX:-UserSerialGC
+---------------------------
+
+ -Xmx
+ -Xmx2048m 等价于-XX:MaxHeapSize jvm最大的堆内存为2048m
+
+ -Xms
+ -Xms512m 等价于-XX:initialHeapSize 设置jvm初始堆内存为512m
+
+ * 打印运行中JVM参数
+ -XX:+PrintFlagsFinal
+ 打印的参数
+ =true 代表默认值
+ :=true 表示被修改
+
+ *查看正在运行的jvm参数
+ jinfo
+ jinf -flags 进程id   查看某一个参数的值
+ *查看jdk进程
+ jps
+
+ *jstat 查看堆内存使用情况
+ jstat -class 进程id
+ jstat -complier 进程id
+ jstat -gc 进程id
+
+ *jmap的使用以及内存溢出分析
+ jmap -heap 进程id  查看进程堆内存的使用
+ jmap -histo <pid> | more 查看内存中对象数量及大小 查看所有对象，包括活跃以及非活跃
+ jmap -histo:live  <pid> | more 查看活跃的对象
+
+ *将内存使用情况dump到文件中
+ jmap -dump:formate=b,file=/tmp/dump.dat 6219
+
+ *通jhat对dump文件进行分析
+ jhat -port <port> <file>
+ jhat -port 9999 /tmp/dump.dat
+
+ *MAT工具对dump文件进行分析
+
+ *jstack  查看jvm的线程执行情况
+ jstack 5212
+ 可以看到线程的问题，比如死锁啥的
+
+
+ *VisualVM工具的使用
+
+ *JMX 监控远程的JVM
+   监控远程的tomcat
+
+
+
